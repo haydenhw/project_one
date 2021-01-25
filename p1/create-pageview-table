@@ -1,0 +1,9 @@
+CREATE TABLE pageviews (
+  domain_code STRING,
+  page_title STRING,
+  count_views INT,
+  total_response_size INT
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ' '
+STORED AS TEXTFILE;

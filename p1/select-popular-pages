@@ -1,0 +1,2 @@
+
+select * from pageviews where domain_code='en' order by count_views desc limit 10;
