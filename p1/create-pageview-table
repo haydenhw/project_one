@@ -7,3 +7,11 @@ CREATE TABLE pageviews (
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ' '
 STORED AS TEXTFILE;
+
+LOAD DATA INPATH '/user/hayden/wiki-data/pageviews-20210120-000000' INTO TABLE pageviews;
+
+CREATE TABLE pageviews_en_daily
+AS
+SELECT page_title, count_views * 24 AS count_views_daily FROM pageviews 
+WHERE domain_code LIKE "en%"
+ORDER BY count_views_daily DESC
