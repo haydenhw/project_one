@@ -16,3 +16,5 @@ SELECT * FROM clickstream
 DISTRIBUTE BY rand()
 SORT BY rand()
 LIMIT 500000;
+
+-- want to 
