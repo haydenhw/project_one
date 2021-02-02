@@ -66,6 +66,16 @@ AS
 SELECT * FROM pageviews_jan20 
 WHERE domain_code LIKE "en%"
 
+DROP TABLE pageviews_jan20_en_test 
+
+CREATE TABLE pageviews_jan20_en_test
+AS
+SELECT * FROM pageviews_jan20_en
+WHERE count_views > 1000
+DISTRIBUTE BY rand()
+SORT BY rand()
+LIMIT 1000;
+
 -- DROP TABLE pageviews_jan20_adjusted
 
 CREATE TABLE pageviews_jan20_adjusted

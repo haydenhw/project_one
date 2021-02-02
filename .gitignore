@@ -2,4 +2,4 @@
 project-metadata.json
 .scalafmt.conf
 metals*
-settings.json
+*.json
