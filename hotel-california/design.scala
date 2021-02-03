@@ -1,4 +1,4 @@
-import scala.collection.mutable.ArrayBuffer
+// import scala.collection.mutable.ArrayBuffer
 /*
 want a [
     [{ page: 'n1', viewcount: n1 }, { page: 'Don_Henely', viewcount: n2}, { page: 'Eagles_Band', viewcount: n3}],
@@ -13,6 +13,28 @@ want a [
 // we need to save number of link occurrences and the name of the referrer to an array
 // then we take the source and call searchClickstreaByPagetTile with it
 // we need to do this recursively or with a loop
+
+/*
+1.)
+select * from clickstream
+where referrer='Hotel_California'
+order by occurrences DESC
+limit 1
+offset 2
+2.)
+select * from clickstream
+where referrer='Don_Felder'
+order by occurrences DESC
+limit 1
+offset 2
+3.)
+select * from clickstream
+where referrer='Eagles_(Band)'
+order by occurrences DESC
+limit 1
+offset 2
+*/
+
 
 case class Page(val referrer: String, val source: String, val linkCount: Int) {}
 
