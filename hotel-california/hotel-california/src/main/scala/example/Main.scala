@@ -21,6 +21,7 @@ object Main extends App {
   val paths = combinations
     .map(Clickstream.findPathByReferrer(referrer, _))
     .map(Clickstream.aggregatePath)
+
   Clickstream.printSummary(paths)
 }
 
@@ -75,6 +76,7 @@ object Clickstream {
 }
 
 object DAO {
+  // TODO memoize this function
   def findNthGreatestLinkSource(referrer: String, n: Int): Page = {
     val cmd =
       s"""

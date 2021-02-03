@@ -82,16 +82,14 @@ CREATE TABLE pageviews_jan20_adjusted
 AS
 SELECT ts, page_title, count_views*2 AS count_views_adj FROM pageviews_jan20_en 
 
--- DROP TABLE pagviews_jan20_aggregated
+-- DROP TABLE pageviews_jan20_aggregated
 
-CREATE TABLE pagviews_jan20_aggregated
+CREATE TABLE pageviews_jan20_aggregated
 AS
 SELECT page_title, SUM(count_views_adj) as count_views FROM pageviews_jan20_adjusted 
 GROUP BY page_title 
 
 
-select * from pagviews_jan20_aggregated 
-order by count_views desc
 
 
 
