@@ -34,20 +34,18 @@ WHERE referrer != "other-external" -- TODO come up with a cleaner solution for t
 GROUP BY referrer
 ORDER BY total_internal_links DESC 
 
-DROP TABLE inlinks_per_pageview 
+DROP TABLE inlinks_per_pageview
 
 CREATE TABLE inlinks_per_pageview
   AS
-SELECT page_title, total_internal_links, count_views, ROUND(total_internal_links / count_views) AS inlinks_per_pageview 
+SELECT page_title, total_internal_links, count_views, ROUND((CAST(total_internal_links AS FLOAT) / count_views), 2) AS inlinks_per_pageview 
 FROM clickstream_en_daily c 
 JOIN pageviews_dec25_aggregated p 
   ON c.referrer=p.page_title 
 WHERE count_views > 100
-ORDER BY inlinks_per_pageview DESC 
+ORDER BY inlinks_per_pageview DESC
 
-select * from inlinks_per_pageview 
-where count_views > 1000
-limit 10
+
  
  
  
