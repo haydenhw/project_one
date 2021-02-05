@@ -5,8 +5,6 @@ import scalaz._
 import scala.language.postfixOps
 import scala.collection.mutable.ArrayBuffer
 
-
-
 object Main extends App {
   if (args.length != 3) {
     println("Usage: <page title> <path depth> <path range>")
@@ -19,7 +17,7 @@ object Main extends App {
     List.range(0, pathRange + 1),
     pathDepth
   )
-  
+
   combinations foreach println
 
   val referrer = args(0)
@@ -44,6 +42,7 @@ object Util {
 
 object Clickstream {
   def printSummary(paths: List[(List[String], Float)]): Unit = {
+    println
     paths
       .sortWith(_._2 > _._2)
       .foreach(p => println(s"${p._1.toList.mkString("-> ")}\t${p._2}"))
@@ -64,11 +63,14 @@ object Clickstream {
     if (n == offsetSequence.length)
       return clickstream
 
-    println(s"clickstream: referrer-> $referrer, offset-> ${offsetSequence(n)}")
-    println(s"combination: $offsetSequence")
+    println(s"\nclickstream: referrer-> $referrer, offset-> ${offsetSequence(n)}")
+    println(s"combination: $offsetSequence\n")
+
     val nextSource =
       DAO.findNthGreatestLinkSource(referrer, offsetSequence(n))
-    println(nextSource :: clickstream)
+
+    (nextSource :: clickstream).reverse foreach println
+    println
 
     findPathByReferrer(
       nextSource.source,
@@ -83,9 +85,15 @@ object DAO {
     val memoized: ((String, Int)) => Page = Memo.mutableHashMapMemo {
       case (referrer, n) => {
         val cmd =
-          s"""
+        n match {
+          case 0 => s"""
+            hive -S -e "SELECT * FROM sorted_links_per_pageview WHERE referrer='$referrer' LIMIT 1" 
+          """
+          case _ => s"""
             hive -S -e "SELECT * FROM sorted_links_per_pageview WHERE referrer='$referrer' LIMIT 1 OFFSET $n" 
           """
+        }
+        
 
         println(s"\nExecuting query... ${cmd}\n")
 
@@ -93,14 +101,19 @@ object DAO {
         val stderr = new StringBuilder
         val status = cmd ! ProcessLogger(stdout append _, stderr append _)
 
-        val parsedOutput = stdout.toString().split('\t')
+        val parsedOutput = stdout.toString().split('\t').toList
+        
+        println(s"Query result:")
+        parsedOutput foreach print
+        println
 
-        val source = parsedOutput(1)
-        val linkCount = parsedOutput(2).toFloat
-
-        println(source, linkCount)
-
-        Page(referrer, source, linkCount)
+        if (parsedOutput.length == 3) {
+          val source = parsedOutput(1)
+          val linkCount = parsedOutput(2).toFloat
+          Page(referrer, source, linkCount)
+        } else {
+          Page("Error", "Error", 0f)
+        }
       }
     }
 
@@ -108,4 +121,8 @@ object DAO {
   }
 }
 
-case class Page(val referrer: String, val source: String, val linkCount: Float) {}
+case class Page(
+    val referrer: String,
+    val source: String,
+    val linkCount: Float
+) {}

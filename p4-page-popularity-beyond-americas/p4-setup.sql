@@ -80,4 +80,8 @@ JOIN pageview_popularity_utc08 india
   ON india.page_title=americas.page_title 
 ORDER BY popularity_change DESC
 
-select * from pageview_popularity_change_india_vs_americas limit 100
+SELECT * FROM pageview_popularity_change_india_vs_americas
+WHERE page_title!='Main_Page'
+ AND page_title!='Special:Search'
+ORDER BY popularity_change ASC
+limit 100
