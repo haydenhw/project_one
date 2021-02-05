@@ -20,7 +20,26 @@ DISTRIBUTE BY rand()
 SORT BY rand()
 LIMIT 500000
 
-DROP TABLE clickstream_en_daily
+CREATE TABLE links_per_pageview
+AS
+SELECT 
+  referrer, 
+  resource,
+  (occurrences / count_views) AS links_per_pageview 
+FROM clickstream c
+JOIN pageviews_jan20_en_aggregated p
+  ON c.referrer = p.page_title
+  
+drop table sorted_links_per_pageview;
+
+CREATE TABLE sorted_links_per_pageview
+AS
+SELECT * FROM links_per_pageview 
+ORDER BY links_per_pageview DESC 
+
+select * from sorted_links_per_pageview
+WHERE referrer='Don_Felder'
+
 
 CREATE TABLE clickstream_en_daily
  AS
@@ -34,7 +53,6 @@ WHERE referrer != "other-external" -- TODO come up with a cleaner solution for t
 GROUP BY referrer
 ORDER BY total_internal_links DESC 
 
-DROP TABLE inlinks_per_pageview
 
 CREATE TABLE inlinks_per_pageview
   AS
@@ -45,6 +63,8 @@ JOIN pageviews_dec25_aggregated p
 WHERE count_views > 100
 ORDER BY inlinks_per_pageview DESC
 
+select * from inlinks_per_pageview
+limit 10
 
  
  

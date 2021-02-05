@@ -5,6 +5,8 @@ import scalaz._
 import scala.language.postfixOps
 import scala.collection.mutable.ArrayBuffer
 
+
+
 object Main extends App {
   if (args.length != 3) {
     println("Usage: <page title> <path depth> <path range>")
@@ -17,6 +19,8 @@ object Main extends App {
     List.range(0, pathRange + 1),
     pathDepth
   )
+  
+  combinations foreach println
 
   val referrer = args(0)
   val paths = combinations
@@ -39,18 +43,15 @@ object Util {
 }
 
 object Clickstream {
-  def printSummary(paths: List[(List[String], Int)]): Unit = {
+  def printSummary(paths: List[(List[String], Float)]): Unit = {
     paths
       .sortWith(_._2 > _._2)
-      .foreach(p =>
-        println(s"Path: ${p._1.toList
-          .mkString("-> ")} | LinksFollowed/PageViews: ${p._2}")
-      )
+      .foreach(p => println(s"${p._1.toList.mkString("-> ")}\t${p._2}"))
   }
 
   def aggregatePath(path: List[Page]) = {
-    path.foldLeft((List[String](), 0)) { (res, cur) =>
-      (cur.source :: res._1, res._2 + cur.linkCount)
+    path.foldLeft((List[String](), 1f)) { (res, cur) =>
+      (cur.source :: res._1, res._2 * cur.linkCount)
     }
   }
 
@@ -64,6 +65,7 @@ object Clickstream {
       return clickstream
 
     println(s"clickstream: referrer-> $referrer, offset-> ${offsetSequence(n)}")
+    println(s"combination: $offsetSequence")
     val nextSource =
       DAO.findNthGreatestLinkSource(referrer, offsetSequence(n))
     println(nextSource :: clickstream)
@@ -82,7 +84,7 @@ object DAO {
       case (referrer, n) => {
         val cmd =
           s"""
-            hive -S -e "SELECT * FROM clickstream WHERE referrer='$referrer' ORDER BY occurrences DESC LIMIT 1 OFFSET $n" 
+            hive -S -e "SELECT * FROM sorted_links_per_pageview WHERE referrer='$referrer' LIMIT 1 OFFSET $n" 
           """
 
         println(s"\nExecuting query... ${cmd}\n")
@@ -94,7 +96,7 @@ object DAO {
         val parsedOutput = stdout.toString().split('\t')
 
         val source = parsedOutput(1)
-        val linkCount = parsedOutput(3).toInt
+        val linkCount = parsedOutput(2).toFloat
 
         println(source, linkCount)
 
@@ -106,4 +108,4 @@ object DAO {
   }
 }
 
-case class Page(val referrer: String, val source: String, val linkCount: Int) {}
+case class Page(val referrer: String, val source: String, val linkCount: Float) {}
