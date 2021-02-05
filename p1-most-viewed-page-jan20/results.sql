@@ -1,6 +1,6 @@
 -- TODO add dependency info
 
-SELECT * FROM pageviews_jan20_aggregated 
+SELECT * FROM pageviews_jan20_en_aggregated 
 ORDER BY count_views DESC
 LIMIT 20
 

@@ -49,5 +49,3 @@ ORDER BY inlinks_per_pageview DESC
  
  
  
- 
- 

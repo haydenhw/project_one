@@ -63,10 +63,11 @@ PARTITION (ts='2021-01-20T22')
 
 CREATE TABLE pageviews_jan20_en
 AS
-SELECT * FROM pageviews_jan20 
+SELECT * 
+FROM pageviews_jan20 
 WHERE domain_code LIKE "en%"
 
-DROP TABLE pageviews_jan20_en_test 
+-- DROP TABLE pageviews_jan20_en_test 
 
 CREATE TABLE pageviews_jan20_en_test
 AS
@@ -76,22 +77,28 @@ DISTRIBUTE BY rand()
 SORT BY rand()
 LIMIT 1000;
 
--- DROP TABLE pageviews_jan20_adjusted
+-- DROP TABLE pageviews_jan20_en_adjusted
 
-CREATE TABLE pageviews_jan20_adjusted
+CREATE TABLE pageviews_jan20_en_adjusted
 AS
-SELECT ts, page_title, count_views*2 AS count_views_adj FROM pageviews_jan20_en 
+SELECT 
+  ts, 
+  page_title, 
+  count_views * 2 AS count_views_adj 
+FROM pageviews_jan20_en 
 
--- DROP TABLE pageviews_jan20_aggregated
+-- DROP TABLE pageviews_jan20_en_aggregated
 
-CREATE TABLE pageviews_jan20_aggregated
+CREATE TABLE pageviews_jan20_en_aggregated
 AS
-SELECT page_title, SUM(count_views_adj) as count_views FROM pageviews_jan20_adjusted 
+SELECT 
+  page_title, 
+  SUM(count_views_adj) as count_views 
+FROM pageviews_jan20_en_adjusted 
 GROUP BY page_title 
 
 
-
-
+select * from pageviews_jan20_en_aggregated limit 20
 
 
 

@@ -1,6 +1,7 @@
 package example
 
 import sys.process._
+import scalaz._
 import scala.language.postfixOps
 import scala.collection.mutable.ArrayBuffer
 
@@ -13,7 +14,7 @@ object Main extends App {
   val pathDepth = args(1).toInt
   val pathRange = args(2).toInt
   val combinations = Util.permutationsWithRepetitions(
-    List.range(1, pathRange + 1),
+    List.range(0, pathRange + 1),
     pathDepth
   )
 
@@ -76,27 +77,32 @@ object Clickstream {
 }
 
 object DAO {
-  // TODO memoize this function
   def findNthGreatestLinkSource(referrer: String, n: Int): Page = {
-    val cmd =
-      s"""
-        hive -S -e "SELECT * FROM clickstream WHERE referrer='$referrer' ORDER BY occurrences DESC LIMIT 1 OFFSET $n" 
-      """
+    val memoized: ((String, Int)) => Page = Memo.mutableHashMapMemo {
+      case (referrer, n) => {
+        val cmd =
+          s"""
+            hive -S -e "SELECT * FROM clickstream WHERE referrer='$referrer' ORDER BY occurrences DESC LIMIT 1 OFFSET $n" 
+          """
 
-    println(s"\nExecuting query... ${cmd}\n")
+        println(s"\nExecuting query... ${cmd}\n")
 
-    var stdout = new StringBuilder
-    val stderr = new StringBuilder
-    val status = cmd ! ProcessLogger(stdout append _, stderr append _)
+        var stdout = new StringBuilder
+        val stderr = new StringBuilder
+        val status = cmd ! ProcessLogger(stdout append _, stderr append _)
 
-    val parsedOutput = stdout.toString().split('\t')
+        val parsedOutput = stdout.toString().split('\t')
 
-    val source = parsedOutput(1)
-    val linkCount = parsedOutput(3).toInt
+        val source = parsedOutput(1)
+        val linkCount = parsedOutput(3).toInt
 
-    println(source, linkCount)
+        println(source, linkCount)
 
-    Page(referrer, source, linkCount)
+        Page(referrer, source, linkCount)
+      }
+    }
+
+    memoized(referrer, n)
   }
 }
 
