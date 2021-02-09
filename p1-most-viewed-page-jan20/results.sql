@@ -1,8 +1,8 @@
--- TODO add dependency info
+-- Depends on common/setup-pageviews_jan20.sql
 
 SELECT * FROM pageviews_jan20_en_aggregated 
 ORDER BY count_views DESC
-LIMIT 20
+LIMIT 20;
 
 --page_title                                               |count_views|
 -----------------------------------------------------------|-----------|

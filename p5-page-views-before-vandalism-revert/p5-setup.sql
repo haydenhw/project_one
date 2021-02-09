@@ -72,23 +72,25 @@ CREATE TABLE pagehistory (
 )
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY '\t'
-STORED AS TEXTFILE
+STORED AS TEXTFILE;
 
 LOAD DATA LOCAL INPATH '/home/hayden/revature/projects/one/data/page_history_enwiki/2020-12.enwiki.2020-12.tsv'
-  INTO TABLE pagehistory
+INTO TABLE pagehistory;
   
 CREATE TABLE pageviews_per_hour
-  AS
-SELECT (SUM(count_views_adj) / 24) AS pageviews_per_hour  
-FROM pageviews_dec25_adjusted
+AS
+SELECT 
+  (SUM(count_views_adj) / 24) AS pageviews_per_hour  
+FROM pageviews_dec25_adjusted;
   
 
 CREATE TABLE average_hours_to_revert_edit
-  AS
-SELECT (AVG(revision_seconds_to_identity_revert)/60/60) AS average_hours_to_revert_edit
+AS
+SELECT 
+  (AVG(revision_seconds_to_identity_revert)/60/60) AS average_hours_to_revert_edit
 FROM pagehistory
 WHERE revision_seconds_to_identity_revert < 610000 
-  OR revision_seconds_to_identity_revert > 660000
+  OR revision_seconds_to_identity_revert > 660000;
 
 
 

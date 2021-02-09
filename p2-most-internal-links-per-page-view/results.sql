@@ -1,8 +1,8 @@
--- TODO explain dependencies
+-- Depends on common/setup-clickstream.sql
 
 SELECT * FROM inlinks_per_pageview 
 WHERE count_views > 10000
-LIMIT 20
+LIMIT 20;
 
 --page_title                              |total_internal_links|count_views|inlinks_per_pageview|
 ------------------------------------------|--------------------|-----------|--------------------|
@@ -29,7 +29,7 @@ LIMIT 20
 
 SELECT * FROM inlinks_per_pageview 
 WHERE count_views > 1000
-LIMIT 20
+LIMIT 20;
 
 --page_title                                     |total_internal_links|count_views|inlinks_per_pageview|
 -------------------------------------------------|--------------------|-----------|--------------------|
@@ -47,7 +47,7 @@ LIMIT 20
 --Elliot_Page                                    |             73860.0|      19310|                3.82|
 --2022_FIFA_World_Cup_qualification_(UEFA)       |              4387.0|       1154|                 3.8|
 --Dawn_Wells                                     |              5087.0|       1396|                3.64|
---Gérard_Houllier                                |              4317.0|       1262|                3.42|
+--Gï¿½rard_Houllier                               |              4317.0|       1262|                3.42|
 --2020_AFC_Champions_League                      |              3401.0|       1002|                3.39|
 --UFC_256                                        |             19795.0|       5858|                3.38|
 --E_Street_Band                                  |              7465.0|       2216|                3.37|

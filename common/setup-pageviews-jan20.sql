@@ -1,4 +1,4 @@
--- DROP TABLE pageviews_jan20
+
 
 CREATE TABLE pageviews_jan20 (
   domain_code STRING,
@@ -59,7 +59,7 @@ LOAD DATA LOCAL INPATH '/home/hayden/revature/projects/one/data/pageviews_jan20_
 INTO TABLE pageviews_jan20
 PARTITION (ts='2021-01-20T22')
 
--- DROP TABLE pageviews_jan20_en 
+
 
 CREATE TABLE pageviews_jan20_en
 AS
@@ -67,7 +67,7 @@ SELECT *
 FROM pageviews_jan20 
 WHERE domain_code LIKE "en%"
 
--- DROP TABLE pageviews_jan20_en_test 
+
 
 CREATE TABLE pageviews_jan20_en_test
 AS
@@ -77,7 +77,7 @@ DISTRIBUTE BY rand()
 SORT BY rand()
 LIMIT 1000;
 
--- DROP TABLE pageviews_jan20_en_adjusted
+
 
 CREATE TABLE pageviews_jan20_en_adjusted
 AS
@@ -87,7 +87,7 @@ SELECT
   count_views * 2 AS count_views_adj 
 FROM pageviews_jan20_en 
 
--- DROP TABLE pageviews_jan20_en_aggregated
+
 
 CREATE TABLE pageviews_jan20_en_aggregated
 AS

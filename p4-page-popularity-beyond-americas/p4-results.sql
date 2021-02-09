@@ -2,7 +2,7 @@ SELECT * FROM pageview_popularity_change_india_vs_americas
 WHERE page_title!='Main_Page'
  AND page_title!='Special:Search'
 ORDER BY popularity_change ASC
-limit 20
+limit 20;
 
 --page_title                             |popularity_change  |
 -----------------------------------------|-------------------|
@@ -29,7 +29,7 @@ SELECT * FROM pageview_popularity_change_india_vs_americas
 WHERE page_title!='Main_Page'
  AND page_title!='Special:Search'
 ORDER BY popularity_change DESC
-limit 100
+limit 100;
 
 --page_title                                                                       |popularity_change  |
 -----------------------------------------------------------------------------------|-------------------|
@@ -63,4 +63,4 @@ limit 100
 --Kellyanne_Conway                                                                 | 0.2459237519330371|
 --List_of_people_pardoned_or_granted_clemency_by_the_president_of_the_United_States|0.24196263217236924|
 --Megyn_Kelly                                                                      |0.23338267595900758|
---Border–Gavaskar_Trophy                                                           |0.23020859662852078|
+--Borderï¿½Gavaskar_Trophy                                                           |0.23020859662852078|
