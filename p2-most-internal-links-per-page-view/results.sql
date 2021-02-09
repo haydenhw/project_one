@@ -53,4 +53,3 @@ LIMIT 20;
 --E_Street_Band                                  |              7465.0|       2216|                3.37|
 --List_of_serial_killers_in_the_United_States    |             14231.0|       4242|                3.35|
 --List_of_death_row_inmates_in_the_United_States |              4484.0|       1348|                3.33|
-

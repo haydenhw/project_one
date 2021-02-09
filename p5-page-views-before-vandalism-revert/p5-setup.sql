@@ -77,6 +77,7 @@ STORED AS TEXTFILE;
 LOAD DATA LOCAL INPATH '/home/hayden/revature/projects/one/data/page_history_enwiki/2020-12.enwiki.2020-12.tsv'
 INTO TABLE pagehistory;
   
+
 CREATE TABLE pageviews_per_hour
 AS
 SELECT 
@@ -91,7 +92,6 @@ SELECT
 FROM pagehistory
 WHERE revision_seconds_to_identity_revert < 610000 
   OR revision_seconds_to_identity_revert > 660000;
-
 
 
   

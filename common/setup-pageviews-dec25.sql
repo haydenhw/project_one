@@ -1,5 +1,3 @@
-
-
 CREATE TABLE pageviews_dec25 (
   domain_code STRING,
   page_title STRING,
@@ -77,15 +75,17 @@ LIMIT 1000;
 
 CREATE TABLE pageviews_dec25_adjusted
 AS
-SELECT ts, page_title, count_views*2 AS count_views_adj FROM pageviews_dec25_en; 
+SELECT 
+  ts, 
+  page_title,
+  count_views*2 AS count_views_adj 
+FROM pageviews_dec25_en; 
 
 
 CREATE TABLE pageviews_dec25_aggregated
 AS
-SELECT page_title, SUM(count_views_adj) as count_views FROM pageviews_dec25_adjusted 
+SELECT 
+  page_title, 
+  SUM(count_views_adj) as count_views 
+FROM pageviews_dec25_adjusted 
 GROUP BY page_title;
-
-
-
-
-

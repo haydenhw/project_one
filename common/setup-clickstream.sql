@@ -62,7 +62,3 @@ JOIN pageviews_dec25_aggregated p
   ON c.referrer=p.page_title 
 WHERE count_views > 100
 ORDER BY inlinks_per_pageview DESC;
-
- 
- 
- 

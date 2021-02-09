@@ -1,5 +1,3 @@
-
-
 CREATE TABLE pageviews_jan20 (
   domain_code STRING,
   page_title STRING,
@@ -60,13 +58,11 @@ INTO TABLE pageviews_jan20
 PARTITION (ts='2021-01-20T22')
 
 
-
 CREATE TABLE pageviews_jan20_en
 AS
 SELECT * 
 FROM pageviews_jan20 
 WHERE domain_code LIKE "en%"
-
 
 
 CREATE TABLE pageviews_jan20_en_test
@@ -78,7 +74,6 @@ SORT BY rand()
 LIMIT 1000;
 
 
-
 CREATE TABLE pageviews_jan20_en_adjusted
 AS
 SELECT 
@@ -88,7 +83,6 @@ SELECT
 FROM pageviews_jan20_en 
 
 
-
 CREATE TABLE pageviews_jan20_en_aggregated
 AS
 SELECT 
@@ -96,10 +90,3 @@ SELECT
   SUM(count_views_adj) as count_views 
 FROM pageviews_jan20_en_adjusted 
 GROUP BY page_title 
-
-
-select * from pageviews_jan20_en_aggregated limit 20
-
-
-
-
