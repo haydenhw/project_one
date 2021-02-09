@@ -4,3 +4,4 @@ project-metadata.json
 .metals*
 *.json
 .dbeaver
+.settings
