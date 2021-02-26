@@ -1,7 +1,7 @@
 -- Depends on common/setup-pageviews-jan20.sql
 
 -- TODO write comments to explain what's going on here
--- We find pages written in Hindu and use them as a proxy for when wikipedia gets the most traffic from India
+-- We find pages written in Hindu and use them as a proxy for when Wikipedia gets the most traffic from India
 CREATE TABLE pageviews_jan20_hi
 AS
 SELECT * FROM pageviews_jan20
