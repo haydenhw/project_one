@@ -47,10 +47,6 @@ hive -f common/setup-pageviews-dec25.sql
 hive -f common/setup-pageviews-jan20.sql
 ```
 
-## Contributors
-
-> Here list the people who have contributed to this project. (ignore this section, if its a solo project)
-
 ## License
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
