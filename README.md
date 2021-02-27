@@ -39,12 +39,13 @@ cd wikipedia-analytics
 ```
 
 ## Usage
-First, create all tables in the `common/` directory
+Create all tables in the `common/` directory
 
 ```sh
-hive -f 
+hive -f common/setup-clickstream.sql
+hive -f common/setup-pageviews-dec25.sql
+hive -f common/setup-pageviews-jan20.sql
 ```
-
 
 ## Contributors
 
@@ -52,4 +53,4 @@ hive -f
 
 ## License
 
-This project uses the following license: [<license_name>](<link>).
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
