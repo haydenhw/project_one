@@ -60,8 +60,7 @@ PARTITION (ts='2021-01-20T22')
 
 CREATE TABLE pageviews_jan20_en
 AS
-SELECT * 
-FROM pageviews_jan20 
+SELECT * FROM pageviews_jan20 
 WHERE domain_code LIKE "en%"
 
 
